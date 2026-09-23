@@ -1,0 +1,3 @@
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(x=>io.observe(x));
+document.querySelectorAll('[data-count]').forEach(el=>{const target=+el.dataset.count;let n=0;const step=Math.max(1,Math.ceil(target/50));const tick=()=>{n=Math.min(target,n+step);el.textContent=n.toLocaleString()+(target>=1000?'+':'');if(n<target)requestAnimationFrame(tick)};const obs=new IntersectionObserver(es=>{if(es[0].isIntersecting){tick();obs.disconnect()}},{threshold:.8});obs.observe(el)});
+setTimeout(()=>document.querySelectorAll('.toast').forEach(t=>{t.style.transition='.4s';t.style.opacity='0';setTimeout(()=>t.remove(),400)}),6000);
