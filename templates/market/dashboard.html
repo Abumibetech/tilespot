@@ -1,1 +1,402 @@
-{% extends 'base.html' %}{% block content %}<section class="dashhero"><div><div class="kicker">YOUR TILESPOT</div><h1>Seller dashboard</h1><p>Manage stock, listings and buyer interest in one place.</p></div><a class="btn btn-gold" href="{% url 'create_tile' %}">+ List new tiles</a></section><section class="dashwrap"><div class="dashstats"><div><strong>{{ my_tiles.count }}</strong><span>My listings</span></div><div><strong>{{ favorites.count }}</strong><span>Saved tiles</span></div><div><strong>{{ inquiries.count }}</strong><span>Recent enquiries</span></div><div><strong>{{ profile.city|default:"Nigeria" }}</strong><span>Business location</span></div></div><div class="dashsection"><div class="sectionhead"><h2>My listings</h2><a href="{% url 'create_tile' %}">Add listing →</a></div><div class="tilegrid">{% for tile in my_tiles %}{% include 'market/tile_card.html' %}<a class="editpill" href="{% url 'edit_tile' tile.pk %}">Edit</a>{% empty %}<div class="empty">You have no listings yet.</div>{% endfor %}</div></div><div class="dashsection"><div class="sectionhead"><h2>Buyer enquiries</h2></div>{% for x in inquiries %}<div class="inquiryrow"><strong>{{ x.tile.name }}</strong><span>{{ x.buyer.username }} · {{ x.quantity }} box(es)</span><p>{{ x.message }}</p></div>{% empty %}<p class="muted">New enquiries will appear here.</p>{% endfor %}</div></section>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if is_seller %}
+        Seller Dashboard — Tilespot
+    {% else %}
+        Buyer Dashboard — Tilespot
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<section class="dashhero">
+
+    <div>
+
+        <div class="kicker">
+            {% if is_seller and is_buyer %}
+                YOUR TILESPOT ACCOUNT
+            {% elif is_seller %}
+                YOUR TILESPOT BUSINESS
+            {% else %}
+                YOUR TILESPOT
+            {% endif %}
+        </div>
+
+        <h1>
+            {% if is_seller and is_buyer %}
+                Buyer & Seller dashboard
+            {% elif is_seller %}
+                Seller dashboard
+            {% else %}
+                Buyer dashboard
+            {% endif %}
+        </h1>
+
+        <p>
+            {% if is_seller and is_buyer %}
+                Shop tiles, save your favourites, contact sellers and manage your own tile listings.
+            {% elif is_seller %}
+                Manage your stock, listings and buyer interest in one place.
+            {% else %}
+                Discover tiles, save your favourites and keep track of your enquiries.
+            {% endif %}
+        </p>
+
+    </div>
+
+
+    {% if is_seller %}
+        <a class="btn btn-gold" href="{% url 'create_tile' %}">
+            + List new tiles
+        </a>
+    {% else %}
+        <a class="btn btn-gold" href="{% url 'catalog' %}">
+            Browse tiles →
+        </a>
+    {% endif %}
+
+</section>
+
+
+<section class="dashwrap">
+
+    <div class="dashstats">
+
+        {% if is_seller %}
+
+            <div>
+                <strong>{{ my_tiles.count }}</strong>
+                <span>My listings</span>
+            </div>
+
+        {% endif %}
+
+
+        <div>
+            <strong>{{ favorites.count }}</strong>
+            <span>Saved tiles</span>
+        </div>
+
+
+        <div>
+            <strong>{{ inquiries.count }}</strong>
+
+            {% if is_seller %}
+                <span>Recent enquiries</span>
+            {% else %}
+                <span>My enquiries</span>
+            {% endif %}
+
+        </div>
+
+
+        <div>
+            <strong>{{ profile.city|default:"Nigeria" }}</strong>
+            <span>Location</span>
+        </div>
+
+    </div>
+
+
+
+    {% if is_seller %}
+
+        <div class="dashsection">
+
+            <div class="sectionhead">
+
+                <div>
+                    <h2>My listings</h2>
+
+                    <p class="sectionsub">
+                        Manage your tile stock and update your marketplace listings.
+                    </p>
+                </div>
+
+                <a href="{% url 'create_tile' %}">
+                    Add listing →
+                </a>
+
+            </div>
+
+
+            <div class="tilegrid">
+
+                {% for tile in my_tiles %}
+
+                    <div>
+
+                        {% include 'market/tile_card.html' with tile=tile %}
+
+                        <a
+                            class="editpill"
+                            href="{% url 'edit_tile' tile.pk %}"
+                        >
+                            Edit listing
+                        </a>
+
+                        <a
+                            class="editpill"
+                            href="{% url 'tile_media' tile.pk %}"
+                        >
+                            Photos & videos
+                        </a>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="empty">
+
+                        <h3>Your digital showroom is waiting.</h3>
+
+                        <p>
+                            Add your first tile listing with photos, price, stock,
+                            location and product details.
+                        </p>
+
+                        <a
+                            class="btn btn-gold"
+                            href="{% url 'create_tile' %}"
+                        >
+                            List your first tiles →
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+
+    {% if is_buyer %}
+
+        <div class="dashsection">
+
+            <div class="sectionhead">
+
+                <div>
+                    <h2>Saved tiles</h2>
+
+                    <p class="sectionsub">
+                        Tiles you have saved while exploring the marketplace.
+                    </p>
+                </div>
+
+                <a href="{% url 'catalog' %}">
+                    Discover more →
+                </a>
+
+            </div>
+
+
+            <div class="tilegrid">
+
+                {% for item in favorites %}
+
+                    {% include 'market/tile_card.html' with tile=item.tile %}
+
+                {% empty %}
+
+                    <div class="empty">
+
+                        <h3>No saved tiles yet.</h3>
+
+                        <p>
+                            When you find tiles you like, save them here so you can
+                            compare them later.
+                        </p>
+
+                        <a
+                            class="btn btn-gold"
+                            href="{% url 'catalog' %}"
+                        >
+                            Explore the tile market →
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+
+    <div class="dashsection">
+
+        <div class="sectionhead">
+
+            <div>
+
+                {% if is_seller %}
+                    <h2>Buyer enquiries</h2>
+
+                    <p class="sectionsub">
+                        Recent customers interested in your listings.
+                    </p>
+                {% else %}
+                    <h2>My enquiries</h2>
+
+                    <p class="sectionsub">
+                        Your recent requests and enquiries to tile sellers.
+                    </p>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        {% for x in inquiries %}
+
+            <div class="inquiryrow">
+
+                <strong>
+                    {{ x.tile.name }}
+                </strong>
+
+
+                {% if is_seller %}
+
+                    <span>
+                        {{ x.buyer.username }}
+                        ·
+                        {{ x.quantity }} box(es)
+                    </span>
+
+                {% else %}
+
+                    <span>
+                        Seller:
+                        {{ x.tile.seller.profile.business_name|default:x.tile.seller.username }}
+                        ·
+                        {{ x.quantity }} box(es)
+                    </span>
+
+                {% endif %}
+
+
+                <p>
+                    {{ x.message }}
+                </p>
+
+
+                <a href="{{ x.tile.get_absolute_url }}">
+                    View tile →
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty">
+
+                {% if is_seller %}
+
+                    <h3>No buyer enquiries yet.</h3>
+
+                    <p>
+                        When customers enquire about your tiles, their requests
+                        will appear here.
+                    </p>
+
+                {% else %}
+
+                    <h3>You have no enquiries yet.</h3>
+
+                    <p>
+                        When you contact a seller about a tile, your enquiries
+                        will appear here.
+                    </p>
+
+                    <a
+                        class="btn btn-gold"
+                        href="{% url 'catalog' %}"
+                    >
+                        Find tiles →
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <div class="dashsection">
+
+        <div class="sectionhead">
+
+            <div>
+
+                <div class="kicker">
+                    ACCOUNT
+                </div>
+
+                <h2>
+                    Your Tilespot profile
+                </h2>
+
+            </div>
+
+            <a href="{% url 'profile' %}">
+                Edit profile →
+            </a>
+
+        </div>
+
+
+        <div class="inquiryrow">
+
+            <strong>
+                {{ request.user.get_full_name|default:request.user.username }}
+            </strong>
+
+            <span>
+                Account type:
+                {{ profile.get_role_display }}
+            </span>
+
+            {% if profile.business_name %}
+                <p>
+                    {{ profile.business_name }}
+                </p>
+            {% endif %}
+
+            {% if profile.phone %}
+                <p>
+                    Phone:
+                    {{ profile.phone }}
+                </p>
+            {% endif %}
+
+            {% if profile.city or profile.state %}
+                <p>
+                    Location:
+                    {{ profile.city }}
+                    {% if profile.city and profile.state %}, {% endif %}
+                    {{ profile.state }}
+                </p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

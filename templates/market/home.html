@@ -1,1 +1,737 @@
-{% extends 'base.html' %}{% block content %}<section class="hero hero-market"><div class="heroimage"></div><div class="herooverlay"></div><div class="hero-content reveal"><div class="eyebrow">NIGERIA'S TILE MARKETPLACE</div><h1>Find the tile.<br><em>See it in a room.</em></h1><p>Discover real tile styles shown in finished spaces, compare sellers, check stock and contact dealers directly.</p><form class="searchbox" action="{% url 'catalog' %}"><div><label>Search tiles, brands or styles</label><input name="q" placeholder="e.g. marble, 60×120, RAK, grey..." autocomplete="off"></div><div><label>Where are you shopping?</label><select name="state"><option value="">All Nigeria</option>{% for s in states %}<option>{{ s }}</option>{% endfor %}</select></div><button class="btn btn-gold">Explore market →</button></form><div class="heroquick"><span>Popular:</span><a href="{% url 'catalog' %}?q=porcelain">Porcelain</a><a href="{% url 'catalog' %}?q=marble">Marble look</a><a href="{% url 'catalog' %}?q=60x120">60×120</a><a href="{% url 'catalog' %}?q=outdoor">Outdoor</a></div></div><div class="hero-stamp"><strong>ROOM<br>READY</strong><span>See how a tile looks<br>before you buy.</span></div></section><section class="tickerchips"><a href="{% url 'catalog' %}">All tiles</a><a href="{% url 'catalog' %}?category=floor">Floor</a><a href="{% url 'catalog' %}?category=wall">Wall</a><a href="{% url 'catalog' %}?category=porcelain">Porcelain</a><a href="{% url 'catalog' %}?category=marble">Marble look</a><a href="{% url 'catalog' %}?category=mosaic">Mosaic</a><a href="{% url 'catalog' %}?category=outdoor">Outdoor</a><a href="{% url 'catalog' %}?category=bathroom">Bathroom</a></section><section class="truststrip"><div><strong data-count="5000">0</strong><span>Tile listings</span></div><div><strong data-count="36">0</strong><span>States + FCT</span></div><div><strong data-count="800">0</strong><span>Sellers & dealers</span></div><div><strong>24/7</strong><span>Marketplace access</span></div></section><section class="section"><div class="sectionhead"><div><div class="kicker">SHOP THE LOOK</div><h2>Tiles shown in finished spaces</h2><p class="sectionsub">The product photo is useful. The room photo tells the story.</p></div><a class="arrowlink" href="{% url 'catalog' %}">View all tiles →</a></div><div class="tilegrid">{% for tile in featured %}{% include 'market/tile_card.html' with tile=tile %}{% empty %}<div class="empty">Run the seed command to populate the market.</div>{% endfor %}</div></section><section class="brandspot"><div class="sectionhead"><div><div class="kicker">BRANDS & COLLECTIONS</div><h2>Explore names people already know</h2><p class="sectionsub">Brand names are seller-entered marketplace information; Tilespot is not claiming dealership or endorsement.</p></div></div><div class="brandrow">{% for b in popular_brands %}<a href="{% url 'catalog' %}?brand={{ b.brand|urlencode }}"><span>{{ b.brand|first }}</span><div><strong>{{ b.brand }}</strong><small>{{ b.total }} marketplace listing{{ b.total|pluralize }}</small></div><b>→</b></a>{% endfor %}</div></section><section class="roomfinder"><div class="roomfinder-copy"><div class="kicker">SHOP BY ROOM</div><h2>Start with the space you're building.</h2><p>Living room, bathroom, kitchen, bedroom, outdoor area or commercial project — discover styles by the way you intend to use them.</p><div class="roomlinks"><a href="{% url 'catalog' %}?q=living%20room">Living room <span>→</span></a><a href="{% url 'catalog' %}?q=bathroom">Bathroom <span>→</span></a><a href="{% url 'catalog' %}?q=kitchen">Kitchen <span>→</span></a><a href="{% url 'catalog' %}?q=outdoor">Outdoor <span>→</span></a></div></div><div class="roomfinder-photo"></div></section><section class="splitcta"><div class="splitcopy"><div class="kicker">SELL WITH CONFIDENCE</div><h2>Turn your stock into a digital showroom.</h2><p>Add your brand, exact dimensions, finish, price, stock, WhatsApp number, multiple room photos and product videos. Buyers can ask questions, comment, save and enquire.</p><a class="btn btn-gold" href="{% url 'create_tile' %}">Start selling →</a></div><div class="showroom"></div></section><section class="section states"><div class="sectionhead"><div><div class="kicker">SHOP ACROSS NIGERIA</div><h2>Every state. One tile market.</h2></div><a href="{% url 'catalog' %}">See all listings →</a></div><div class="stategrid">{% for s in states %}<a href="{% url 'catalog' %}?state={{ s|urlencode }}">{{ s }}<span>→</span></a>{% endfor %}</div></section><section class="section latest"><div class="sectionhead"><div><div class="kicker">JUST LISTED</div><h2>Fresh stock from the market</h2></div><a href="{% url 'catalog' %}?sort=newest">See newest →</a></div><div class="tilegrid">{% for tile in latest %}{% include 'market/tile_card.html' with tile=tile %}{% endfor %}</div></section><section class="featureband"><div class="featurevisual"></div><div class="featurecopy"><div class="kicker">BUILT FOR REAL PROJECTS</div><h2>From one box to a whole building.</h2><div class="featurelist"><div><b>01</b><span><strong>See the room</strong><small>Browse finished-space photography so you can judge the look and scale.</small></span></div><div><b>02</b><span><strong>Talk to the seller</strong><small>Use WhatsApp, phone, questions, comments or direct messages.</small></span></div><div><b>03</b><span><strong>Compare before buying</strong><small>Check size, finish, stock, location, price and minimum order.</small></span></div></div></div></section>{% endblock %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<section class="hero hero-market">
+
+
+    <div class="heroimage"></div>
+
+    <div class="herooverlay"></div>
+
+
+    <div class="hero-content reveal">
+
+
+        <div class="eyebrow">
+            NIGERIA'S TILE MARKETPLACE
+        </div>
+
+
+        <h1>
+            Find the tile.
+            <br>
+            <em>See it in a room.</em>
+        </h1>
+
+
+        <p>
+            Discover real tile styles shown in finished spaces,
+            compare sellers, check stock and contact dealers directly.
+        </p>
+
+
+
+        <form
+            class="searchbox"
+            action="{% url 'catalog' %}"
+        >
+
+
+            <div>
+
+                <label>
+                    Search tiles, brands or styles
+                </label>
+
+                <input
+                    name="q"
+                    placeholder="e.g. marble, 60×120, RAK, grey..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+
+            <div>
+
+                <label>
+                    Where are you shopping?
+                </label>
+
+                <select name="state">
+
+                    <option value="">
+                        All Nigeria
+                    </option>
+
+                    {% for s in states %}
+
+                        <option>
+                            {{ s }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+
+            <button class="btn btn-gold">
+                Explore market →
+            </button>
+
+
+        </form>
+
+
+
+        <div class="heroquick">
+
+            <span>
+                Popular:
+            </span>
+
+            <a href="{% url 'catalog' %}?q=porcelain">
+                Porcelain
+            </a>
+
+            <a href="{% url 'catalog' %}?q=marble">
+                Marble look
+            </a>
+
+            <a href="{% url 'catalog' %}?q=60x120">
+                60×120
+            </a>
+
+            <a href="{% url 'catalog' %}?q=outdoor">
+                Outdoor
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="hero-stamp">
+
+        <strong>
+            ROOM
+            <br>
+            READY
+        </strong>
+
+        <span>
+            See how a tile looks
+            <br>
+            before you buy.
+        </span>
+
+    </div>
+
+
+</section>
+
+
+
+<section class="tickerchips">
+
+    <a href="{% url 'catalog' %}">
+        All tiles
+    </a>
+
+    <a href="{% url 'catalog' %}?category=floor">
+        Floor
+    </a>
+
+    <a href="{% url 'catalog' %}?category=wall">
+        Wall
+    </a>
+
+    <a href="{% url 'catalog' %}?category=porcelain">
+        Porcelain
+    </a>
+
+    <a href="{% url 'catalog' %}?category=marble">
+        Marble look
+    </a>
+
+    <a href="{% url 'catalog' %}?category=mosaic">
+        Mosaic
+    </a>
+
+    <a href="{% url 'catalog' %}?category=outdoor">
+        Outdoor
+    </a>
+
+    <a href="{% url 'catalog' %}?category=bathroom">
+        Bathroom
+    </a>
+
+</section>
+
+
+
+<section class="truststrip">
+
+
+    <div>
+
+        <strong data-count="5000">
+            0
+        </strong>
+
+        <span>
+            Tile listings
+        </span>
+
+    </div>
+
+
+
+    <div>
+
+        <strong data-count="36">
+            0
+        </strong>
+
+        <span>
+            States + FCT
+        </span>
+
+    </div>
+
+
+
+    <div>
+
+        <strong data-count="800">
+            0
+        </strong>
+
+        <span>
+            Sellers & dealers
+        </span>
+
+    </div>
+
+
+
+    <div>
+
+        <strong>
+            24/7
+        </strong>
+
+        <span>
+            Marketplace access
+        </span>
+
+    </div>
+
+
+</section>
+
+
+
+<section class="section">
+
+
+    <div class="sectionhead">
+
+
+        <div>
+
+            <div class="kicker">
+                SHOP THE LOOK
+            </div>
+
+            <h2>
+                Tiles shown in finished spaces
+            </h2>
+
+            <p class="sectionsub">
+                The product photo is useful.
+                The room photo tells the story.
+            </p>
+
+        </div>
+
+
+        <a
+            class="arrowlink"
+            href="{% url 'catalog' %}"
+        >
+            View all tiles →
+        </a>
+
+
+    </div>
+
+
+
+    <div class="tilegrid">
+
+
+        {% for tile in featured %}
+
+            {% include 'market/tile_card.html' with tile=tile %}
+
+        {% empty %}
+
+
+            <div class="empty">
+
+                <h3>
+                    The Tilespot marketplace is getting ready.
+                </h3>
+
+                <p>
+                    New tile listings will appear here as sellers add
+                    their products to Tilespot.
+                </p>
+
+                <a
+                    class="btn btn-gold"
+                    href="{% url 'catalog' %}"
+                >
+                    Browse the marketplace →
+                </a>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<section class="brandspot">
+
+
+    <div class="sectionhead">
+
+
+        <div>
+
+            <div class="kicker">
+                BRANDS & COLLECTIONS
+            </div>
+
+            <h2>
+                Explore names people already know
+            </h2>
+
+            <p class="sectionsub">
+                Brand names are seller-entered marketplace information;
+                Tilespot is not claiming dealership or endorsement.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="brandrow">
+
+
+        {% for b in popular_brands %}
+
+
+            <a
+                href="{% url 'catalog' %}?brand={{ b.brand|urlencode }}"
+            >
+
+                <span>
+                    {{ b.brand|first }}
+                </span>
+
+
+                <div>
+
+                    <strong>
+                        {{ b.brand }}
+                    </strong>
+
+                    <small>
+                        {{ b.total }}
+                        marketplace listing{{ b.total|pluralize }}
+                    </small>
+
+                </div>
+
+
+                <b>
+                    →
+                </b>
+
+
+            </a>
+
+
+        {% empty %}
+
+
+            <div class="empty">
+
+                <p>
+                    Brands and collections will appear here as products
+                    are added to the marketplace.
+                </p>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<section class="roomfinder">
+
+
+    <div class="roomfinder-copy">
+
+
+        <div class="kicker">
+            SHOP BY ROOM
+        </div>
+
+
+        <h2>
+            Start with the space you're building.
+        </h2>
+
+
+        <p>
+            Living room, bathroom, kitchen, bedroom, outdoor area
+            or commercial project — discover styles by the way
+            you intend to use them.
+        </p>
+
+
+
+        <div class="roomlinks">
+
+
+            <a href="{% url 'catalog' %}?q=living%20room">
+                Living room
+                <span>→</span>
+            </a>
+
+
+            <a href="{% url 'catalog' %}?q=bathroom">
+                Bathroom
+                <span>→</span>
+            </a>
+
+
+            <a href="{% url 'catalog' %}?q=kitchen">
+                Kitchen
+                <span>→</span>
+            </a>
+
+
+            <a href="{% url 'catalog' %}?q=outdoor">
+                Outdoor
+                <span>→</span>
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="roomfinder-photo"></div>
+
+
+</section>
+
+
+
+<section class="splitcta">
+
+
+    <div class="splitcopy">
+
+
+        <div class="kicker">
+            SELL WITH CONFIDENCE
+        </div>
+
+
+        <h2>
+            Turn your stock into a digital showroom.
+        </h2>
+
+
+        <p>
+            Add your brand, exact dimensions, finish, price, stock,
+            WhatsApp number, multiple room photos and product videos.
+            Buyers can ask questions, comment, save and enquire.
+        </p>
+
+
+        <a
+            class="btn btn-gold"
+            href="{% url 'create_tile' %}"
+        >
+            Start selling →
+        </a>
+
+
+    </div>
+
+
+    <div class="showroom"></div>
+
+
+</section>
+
+
+
+<section class="section states">
+
+
+    <div class="sectionhead">
+
+
+        <div>
+
+            <div class="kicker">
+                SHOP ACROSS NIGERIA
+            </div>
+
+            <h2>
+                Every state. One tile market.
+            </h2>
+
+        </div>
+
+
+        <a href="{% url 'catalog' %}">
+            See all listings →
+        </a>
+
+
+    </div>
+
+
+
+    <div class="stategrid">
+
+
+        {% for s in states %}
+
+            <a
+                href="{% url 'catalog' %}?state={{ s|urlencode }}"
+            >
+
+                {{ s }}
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<section class="section latest">
+
+
+    <div class="sectionhead">
+
+
+        <div>
+
+            <div class="kicker">
+                JUST LISTED
+            </div>
+
+            <h2>
+                Fresh stock from the market
+            </h2>
+
+        </div>
+
+
+        <a href="{% url 'catalog' %}?sort=newest">
+            See newest →
+        </a>
+
+
+    </div>
+
+
+
+    <div class="tilegrid">
+
+
+        {% for tile in latest %}
+
+            {% include 'market/tile_card.html' with tile=tile %}
+
+        {% empty %}
+
+
+            <div class="empty">
+
+                <h3>
+                    No new listings yet.
+                </h3>
+
+                <p>
+                    Check back soon for fresh tile stock from sellers
+                    across Nigeria.
+                </p>
+
+                <a
+                    class="btn btn-gold"
+                    href="{% url 'catalog' %}"
+                >
+                    Explore all tiles →
+                </a>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<section class="featureband">
+
+
+    <div class="featurevisual"></div>
+
+
+    <div class="featurecopy">
+
+
+        <div class="kicker">
+            BUILT FOR REAL PROJECTS
+        </div>
+
+
+        <h2>
+            From one box to a whole building.
+        </h2>
+
+
+
+        <div class="featurelist">
+
+
+            <div>
+
+                <b>
+                    01
+                </b>
+
+                <span>
+
+                    <strong>
+                        See the room
+                    </strong>
+
+                    <small>
+                        Browse finished-space photography so you can
+                        judge the look and scale.
+                    </small>
+
+                </span>
+
+            </div>
+
+
+
+            <div>
+
+                <b>
+                    02
+                </b>
+
+                <span>
+
+                    <strong>
+                        Talk to the seller
+                    </strong>
+
+                    <small>
+                        Use WhatsApp, phone, questions, comments or
+                        direct messages.
+                    </small>
+
+                </span>
+
+            </div>
+
+
+
+            <div>
+
+                <b>
+                    03
+                </b>
+
+                <span>
+
+                    <strong>
+                        Compare before buying
+                    </strong>
+
+                    <small>
+                        Check size, finish, stock, location, price
+                        and minimum order.
+                    </small>
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

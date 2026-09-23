@@ -1,1 +1,519 @@
-{% load static %}<!doctype html><html lang="en-NG"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{% block title %}Tilespot — Nigeria's modern tile marketplace{% endblock %}</title><meta name="description" content="Tilespot helps buyers discover, compare and contact tile sellers across Nigeria. Browse porcelain, ceramic, marble-look, wall, floor, outdoor and mosaic tiles."><meta name="keywords" content="tiles Nigeria, buy tiles Nigeria, floor tiles, wall tiles, porcelain tiles, ceramic tiles, marble tiles, tile sellers Lagos, tiles Abuja, tiles Enugu, Tilespot"><link rel="canonical" href="{{ request.build_absolute_uri }}"><meta property="og:title" content="Tilespot — Nigeria's modern tile marketplace"><meta property="og:description" content="Discover tile designs, compare prices, explore completed spaces and contact sellers across Nigeria."><meta property="og:type" content="website"><meta property="og:url" content="{{ request.build_absolute_uri }}"><meta name="theme-color" content="#0b1714"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23d9ad42'/%3E%3Cpath d='M17 17h28v28H17zM55 55h28v28H55z' fill='%230b1714'/%3E%3Cpath d='M55 17h28v28H55zM17 55h28v28H17z' fill='none' stroke='%230b1714' stroke-width='5'/%3E%3C/svg%3E"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="{% static 'css/site.css' %}"></head><body><div class="topbar">TILESPOT MARKET <span>•</span> Find it. Compare it. Build it. <span>•</span> Built for Nigeria</div><header class="nav"><a class="brand" href="{% url 'home' %}"><span class="logo"><i></i><i></i><i></i><i></i></span><span>Tile<span>spot</span></span></a><nav class="navlinks"><a href="{% url 'catalog' %}">Shop tiles</a><a href="{% url 'catalog' %}?sort=popular">Trending</a><a href="{% url 'catalog' %}?category=outdoor">Project tiles</a><a href="{% url 'create_tile' %}">Sell on Tilespot</a></nav><div class="navactions">{% if user.is_authenticated %}<a class="iconlink" href="{% url 'notifications' %}">◉{% if unread_notifications %}<b>{{ unread_notifications }}</b>{% endif %}</a><a class="avatar" href="{% url 'dashboard' %}">{{ user.username|first|upper }}</a>{% else %}<a href="{% url 'login' %}" class="signin">Sign in</a><a href="{% url 'register' %}" class="btn btn-dark">Join Tilespot</a>{% endif %}<button class="hamb" onclick="document.body.classList.toggle('menu-open')">☰</button></div></header>{% if site_ads %}<div class="adrail" aria-label="Tilespot marketplace announcements"><div class="adlabel">SPOTLIGHT</div><div class="adtrack">{% for ad in site_ads %}<a href="{{ ad.target_url|default:'#' }}" {% if ad.target_url|slice:':4' == 'http' %}target="_blank" rel="noopener"{% endif %}><span>{{ ad.title }}</span>{% if ad.image %}<img src="{{ ad.image.url }}" alt="">{% endif %}<small>Explore →</small></a>{% endfor %}{% for ad in site_ads %}<a aria-hidden="true" href="{{ ad.target_url|default:'#' }}"><span>{{ ad.title }}</span>{% if ad.image %}<img src="{{ ad.image.url }}" alt="">{% endif %}<small>Explore →</small></a>{% endfor %}</div></div>{% endif %}<main>{% if messages %}<div class="toastwrap">{% for message in messages %}<div class="toast {{ message.tags }}">{{ message }}<button onclick="this.parentElement.remove()">×</button></div>{% endfor %}</div>{% endif %}{% block content %}{% endblock %}</main><footer><div class="footergrid"><div><a class="brand light" href="{% url 'home' %}"><span class="logo"><i></i><i></i><i></i><i></i></span><span>Tile<span>spot</span></span></a><p>A modern Nigerian marketplace for tile discovery, comparison and seller enquiries.</p></div><div><h4>Marketplace</h4><a href="{% url 'catalog' %}">Browse tiles</a><a href="{% url 'catalog' %}?category=porcelain">Porcelain</a><a href="{% url 'catalog' %}?category=ceramic">Ceramic</a><a href="{% url 'catalog' %}?category=mosaic">Mosaic</a></div><div><h4>Sell on Tilespot</h4><a href="{% url 'create_tile' %}">List your stock</a><a href="{% url 'dashboard' %}">Seller dashboard</a><a href="{% url 'profile' %}">Business & WhatsApp</a></div><div><h4>Popular locations</h4><a href="{% url 'catalog' %}?state=Lagos">Lagos</a><a href="{% url 'catalog' %}?state=Federal%20Capital%20Territory">Abuja / FCT</a><a href="{% url 'catalog' %}?state=Rivers">Port Harcourt</a><a href="{% url 'catalog' %}?state=Enugu">Enugu</a></div></div><div class="footerbottom">© {% now 'Y' %} Tilespot · Built for Nigeria · <a href="/admin/">Admin</a></div></footer><script src="{% static 'js/site.js' %}"></script></body></html>
+{% load static %}
+
+<!doctype html>
+
+<html lang="en-NG">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,initial-scale=1"
+    >
+
+    <title>
+        {% block title %}
+            Tilespot — Nigeria's modern tile marketplace
+        {% endblock %}
+    </title>
+
+    <meta
+        name="description"
+        content="Tilespot helps buyers discover, compare and contact tile sellers across Nigeria. Browse porcelain, ceramic, marble-look, wall, floor, outdoor and mosaic tiles."
+    >
+
+    <meta
+        name="keywords"
+        content="tiles Nigeria, buy tiles Nigeria, floor tiles, wall tiles, porcelain tiles, ceramic tiles, marble tiles, tile sellers Lagos, tiles Abuja, tiles Enugu, Tilespot"
+    >
+
+    <link
+        rel="canonical"
+        href="{{ request.build_absolute_uri }}"
+    >
+
+    <meta
+        property="og:title"
+        content="Tilespot — Nigeria's modern tile marketplace"
+    >
+
+    <meta
+        property="og:description"
+        content="Discover tile designs, compare prices, explore completed spaces and contact sellers across Nigeria."
+    >
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:url"
+        content="{{ request.build_absolute_uri }}"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b1714"
+    >
+
+
+    <link
+        rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23d9ad42'/%3E%3Cpath d='M17 17h28v28H17zM55 55h28v28H55z' fill='%230b1714'/%3E%3Cpath d='M55 17h28v28H55zM17 55h28v28H17z' fill='none' stroke='%230b1714' stroke-width='5'/%3E%3C/svg%3E"
+    >
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/site.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <div class="topbar">
+
+        TILESPOT MARKET
+
+        <span>•</span>
+
+        Find it. Compare it. Build it.
+
+        <span>•</span>
+
+        Built for Nigeria
+
+    </div>
+
+
+
+    <header class="nav">
+
+
+        <a
+            class="brand"
+            href="{% url 'home' %}"
+        >
+
+            <span class="logo">
+
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+
+            </span>
+
+            <span>
+                Tile<span>spot</span>
+            </span>
+
+        </a>
+
+
+
+        <nav class="navlinks">
+
+            <a href="{% url 'catalog' %}">
+                Shop tiles
+            </a>
+
+            <a href="{% url 'catalog' %}?sort=popular">
+                Trending
+            </a>
+
+            <a href="{% url 'catalog' %}?category=outdoor">
+                Project tiles
+            </a>
+
+
+            {% if user.is_authenticated %}
+
+                {% if user.profile.role == 'seller' or user.profile.role == 'both' %}
+
+                    <a href="{% url 'create_tile' %}">
+                        Sell on Tilespot
+                    </a>
+
+                {% endif %}
+
+            {% else %}
+
+                <a href="{% url 'create_tile' %}">
+                    Sell on Tilespot
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+
+
+        <div class="navactions">
+
+
+            {% if user.is_authenticated %}
+
+
+                <a
+                    class="iconlink"
+                    href="{% url 'notifications' %}"
+                    title="Notifications"
+                >
+
+                    ◉
+
+                    {% if unread_notifications %}
+
+                        <b>
+                            {{ unread_notifications }}
+                        </b>
+
+                    {% endif %}
+
+                </a>
+
+
+                <a
+                    class="avatar"
+                    href="{% url 'dashboard' %}"
+                    title="Dashboard"
+                >
+
+                    {{ user.username|first|upper }}
+
+                </a>
+
+
+                <a
+                    class="signin"
+                    href="{% url 'dashboard' %}"
+                >
+                    Dashboard
+                </a>
+
+
+                <a
+                    class="btn btn-dark"
+                    href="{% url 'logout' %}"
+                >
+                    Logout
+                </a>
+
+
+            {% else %}
+
+
+                <a
+                    href="{% url 'login' %}"
+                    class="signin"
+                >
+                    Sign in
+                </a>
+
+
+                <a
+                    href="{% url 'register' %}"
+                    class="btn btn-dark"
+                >
+                    Join Tilespot
+                </a>
+
+
+            {% endif %}
+
+
+            <button
+                class="hamb"
+                onclick="document.body.classList.toggle('menu-open')"
+                type="button"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+
+        </div>
+
+    </header>
+
+
+
+    {% if site_ads %}
+
+        <div
+            class="adrail"
+            aria-label="Tilespot marketplace announcements"
+        >
+
+            <div class="adlabel">
+                SPOTLIGHT
+            </div>
+
+
+            <div class="adtrack">
+
+
+                {% for ad in site_ads %}
+
+                    <a
+                        href="{{ ad.target_url|default:'#' }}"
+                        {% if ad.target_url|slice:':4' == 'http' %}
+                            target="_blank"
+                            rel="noopener"
+                        {% endif %}
+                    >
+
+                        <span>
+                            {{ ad.title }}
+                        </span>
+
+                        {% if ad.image %}
+
+                            <img
+                                src="{{ ad.image.url }}"
+                                alt=""
+                            >
+
+                        {% endif %}
+
+                        <small>
+                            Explore →
+                        </small>
+
+                    </a>
+
+                {% endfor %}
+
+
+
+                {% for ad in site_ads %}
+
+                    <a
+                        aria-hidden="true"
+                        href="{{ ad.target_url|default:'#' }}"
+                    >
+
+                        <span>
+                            {{ ad.title }}
+                        </span>
+
+                        {% if ad.image %}
+
+                            <img
+                                src="{{ ad.image.url }}"
+                                alt=""
+                            >
+
+                        {% endif %}
+
+                        <small>
+                            Explore →
+                        </small>
+
+                    </a>
+
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+
+    <main>
+
+
+        {% if messages %}
+
+            <div class="toastwrap">
+
+                {% for message in messages %}
+
+                    <div class="toast {{ message.tags }}">
+
+                        {{ message }}
+
+                        <button
+                            onclick="this.parentElement.remove()"
+                            type="button"
+                            aria-label="Close notification"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+
+        {% block content %}
+
+        {% endblock %}
+
+
+    </main>
+
+
+
+    <footer>
+
+
+        <div class="footergrid">
+
+
+            <div>
+
+                <a
+                    class="brand light"
+                    href="{% url 'home' %}"
+                >
+
+                    <span class="logo">
+
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+
+                    </span>
+
+                    <span>
+                        Tile<span>spot</span>
+                    </span>
+
+                </a>
+
+
+                <p>
+                    A modern Nigerian marketplace for tile discovery,
+                    comparison and seller enquiries.
+                </p>
+
+            </div>
+
+
+
+            <div>
+
+                <h4>
+                    Marketplace
+                </h4>
+
+                <a href="{% url 'catalog' %}">
+                    Browse tiles
+                </a>
+
+                <a href="{% url 'catalog' %}?category=porcelain">
+                    Porcelain
+                </a>
+
+                <a href="{% url 'catalog' %}?category=ceramic">
+                    Ceramic
+                </a>
+
+                <a href="{% url 'catalog' %}?category=mosaic">
+                    Mosaic
+                </a>
+
+            </div>
+
+
+
+            {% if user.is_authenticated and user.profile.role == 'seller' or user.is_authenticated and user.profile.role == 'both' %}
+
+                <div>
+
+                    <h4>
+                        Sell on Tilespot
+                    </h4>
+
+                    <a href="{% url 'create_tile' %}">
+                        List your stock
+                    </a>
+
+                    <a href="{% url 'dashboard' %}">
+                        Seller dashboard
+                    </a>
+
+                    <a href="{% url 'profile' %}">
+                        Business & WhatsApp
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+
+
+            <div>
+
+                <h4>
+                    Popular locations
+                </h4>
+
+                <a href="{% url 'catalog' %}?state=Lagos">
+                    Lagos
+                </a>
+
+                <a href="{% url 'catalog' %}?state=Federal%20Capital%20Territory">
+                    Abuja / FCT
+                </a>
+
+                <a href="{% url 'catalog' %}?state=Rivers">
+                    Port Harcourt
+                </a>
+
+                <a href="{% url 'catalog' %}?state=Enugu">
+                    Enugu
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="footerbottom">
+
+            © {% now 'Y' %}
+
+            Tilespot
+
+            · Built for Nigeria
+
+        </div>
+
+
+    </footer>
+
+
+
+    <script src="{% static 'js/site.js' %}"></script>
+
+
+</body>
+
+</html>
