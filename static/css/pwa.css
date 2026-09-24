@@ -462,3 +462,281 @@ The following styles activate only on mobile/tablet widths.
 END TILESPOT STAGE 3
 ============================================================
 */
+
+/* ============================================================
+   TILESPOT_STAGE4_MOBILE_POLISH_CSS
+   Mobile app polish layer.
+   Desktop remains unchanged.
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    /* --------------------------------------------------------
+       APP-LIKE PAGE BEHAVIOR
+       -------------------------------------------------------- */
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        overscroll-behavior-y: contain;
+    }
+
+    /* Keep content safely above the fixed bottom navigation. */
+    main,
+    .container,
+    .content,
+    .page-content {
+        scroll-margin-bottom: 90px;
+    }
+
+
+    /* --------------------------------------------------------
+       MOBILE BOTTOM NAV — POLISHED
+       -------------------------------------------------------- */
+
+    .tilespot-mobile-nav {
+        isolation: isolate;
+        will-change: transform;
+        padding-bottom:
+            calc(8px + env(safe-area-inset-bottom));
+    }
+
+    .tilespot-mobile-nav::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background:
+            linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.98),
+                rgba(248, 250, 252, 0.96)
+            );
+    }
+
+    .tilespot-mobile-nav-item {
+        touch-action: manipulation;
+        user-select: none;
+        -webkit-user-select: none;
+        will-change: transform;
+    }
+
+    .tilespot-mobile-nav-item:focus-visible {
+        outline: 2px solid #00c2ff;
+        outline-offset: -2px;
+    }
+
+    .tilespot-mobile-nav-item:active {
+        transform: translateY(1px) scale(0.91);
+    }
+
+    .tilespot-mobile-nav-icon {
+        transition:
+            transform 0.2s ease,
+            font-size 0.2s ease;
+        transform-origin: center;
+    }
+
+    .tilespot-mobile-nav-item:active
+    .tilespot-mobile-nav-icon {
+        transform: scale(0.88);
+    }
+
+    .tilespot-mobile-nav-item.tilespot-mobile-active
+    .tilespot-mobile-nav-icon {
+        transform: translateY(-1px) scale(1.06);
+    }
+
+
+    /* --------------------------------------------------------
+       SELL BUTTON — FLOATING APP ACTION
+       -------------------------------------------------------- */
+
+    .tilespot-mobile-sell {
+        box-shadow:
+            0 8px 20px rgba(15, 118, 110, 0.22),
+            0 2px 6px rgba(15, 23, 42, 0.10);
+        transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease,
+            filter 0.18s ease;
+    }
+
+    .tilespot-mobile-sell:hover {
+        filter: brightness(1.02);
+    }
+
+    .tilespot-mobile-sell:active {
+        transform: translateY(2px) scale(0.93);
+        box-shadow:
+            0 4px 10px rgba(15, 118, 110, 0.18);
+    }
+
+    .tilespot-mobile-sell-icon {
+        transition: transform 0.22s ease;
+    }
+
+    .tilespot-mobile-sell:active
+    .tilespot-mobile-sell-icon {
+        transform: rotate(8deg) scale(0.9);
+    }
+
+
+    /* --------------------------------------------------------
+       INSTALL TILESPOT BUTTON
+       -------------------------------------------------------- */
+
+    .tilespot-install-button {
+        min-height: 48px;
+        padding:
+            12px 18px
+            calc(12px + env(safe-area-inset-bottom))
+            18px;
+        border-radius: 16px;
+        font-size: 14px;
+        letter-spacing: 0.01em;
+        box-shadow:
+            0 14px 32px rgba(7, 16, 25, 0.20),
+            0 3px 10px rgba(0, 194, 255, 0.18);
+        transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease,
+            filter 0.18s ease;
+        touch-action: manipulation;
+    }
+
+    .tilespot-install-button:hover {
+        filter: brightness(1.03);
+        transform: translateY(-2px);
+    }
+
+    .tilespot-install-button:active {
+        transform: translateY(1px) scale(0.97);
+        box-shadow:
+            0 7px 18px rgba(7, 16, 25, 0.18);
+    }
+
+    .tilespot-install-button:focus-visible {
+        outline: 3px solid rgba(0, 194, 255, 0.35);
+        outline-offset: 3px;
+    }
+
+
+    /* --------------------------------------------------------
+       NOTIFICATION POLISH
+       -------------------------------------------------------- */
+
+    [aria-label="Notifications"],
+    .notifications-link,
+    .notification-link {
+        transition:
+            transform 0.18s ease,
+            color 0.18s ease;
+        touch-action: manipulation;
+    }
+
+    [aria-label="Notifications"]:active,
+    .notifications-link:active,
+    .notification-link:active {
+        transform: scale(0.92);
+    }
+
+    /* Existing unread badge gets a subtle attention animation. */
+    .notification-badge,
+    .notifications-badge,
+    .unread-badge {
+        animation: tilespot-notification-pulse 2.8s ease-in-out infinite;
+        transform-origin: center;
+    }
+
+    @keyframes tilespot-notification-pulse {
+        0%,
+        72%,
+        100% {
+            transform: scale(1);
+        }
+
+        76% {
+            transform: scale(1.12);
+        }
+
+        80% {
+            transform: scale(0.96);
+        }
+
+        84% {
+            transform: scale(1.06);
+        }
+    }
+
+
+    /* --------------------------------------------------------
+       MOBILE CARDS — LIGHT TOUCH FEEDBACK
+       Only activates on elements that already look like cards.
+       -------------------------------------------------------- */
+
+    .card,
+    .tile-card,
+    .listing-card,
+    .property-card,
+    .market-card {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .card:active,
+    .tile-card:active,
+    .listing-card:active,
+    .property-card:active,
+    .market-card:active {
+        transform: scale(0.992);
+    }
+
+
+    /* --------------------------------------------------------
+       SAFE AREA
+       -------------------------------------------------------- */
+
+    .tilespot-mobile-nav {
+        padding-left:
+            max(6px, env(safe-area-inset-left));
+        padding-right:
+            max(6px, env(safe-area-inset-right));
+    }
+
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   Respect the user's accessibility preference.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .tilespot-mobile-nav-item,
+    .tilespot-mobile-nav-icon,
+    .tilespot-mobile-sell,
+    .tilespot-mobile-sell-icon,
+    .tilespot-install-button {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .notification-badge,
+    .notifications-badge,
+    .unread-badge {
+        animation: none !important;
+    }
+}
+
+/* ============================================================
+   END TILESPOT_STAGE4_MOBILE_POLISH_CSS
+   ============================================================ */
