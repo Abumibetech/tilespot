@@ -139,3 +139,326 @@ a.btn {
         width: calc(100% - 32px);
     }
 }
+
+
+/* TILESPOT_STAGE3_MOBILE_NAV_CSS */
+
+/*
+============================================================
+TILESPOT MOBILE APP EXPERIENCE
+============================================================
+Desktop is intentionally left untouched.
+The following styles activate only on mobile/tablet widths.
+============================================================
+*/
+
+.tilespot-mobile-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    /*
+    --------------------------------------------------------
+    MOBILE PAGE SAFETY
+    --------------------------------------------------------
+    */
+
+    html {
+        scroll-padding-bottom: 90px;
+    }
+
+    body {
+        padding-bottom: calc(78px + env(safe-area-inset-bottom));
+    }
+
+    /*
+    --------------------------------------------------------
+    MOBILE BOTTOM NAVIGATION
+    --------------------------------------------------------
+    */
+
+    .tilespot-mobile-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        z-index: 99999;
+
+        display: flex;
+        align-items: stretch;
+        justify-content: space-around;
+
+        min-height: 68px;
+
+        padding:
+            7px
+            6px
+            calc(7px + env(safe-area-inset-bottom))
+            6px;
+
+        background:
+            rgba(255, 255, 255, 0.96);
+
+        border-top:
+            1px solid
+            rgba(15, 23, 42, 0.10);
+
+        box-shadow:
+            0 -8px 30px
+            rgba(15, 23, 42, 0.10);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+    }
+
+    .tilespot-mobile-nav-item {
+        position: relative;
+
+        flex: 1 1 0;
+
+        min-width: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        gap: 3px;
+
+        padding: 5px 3px;
+
+        color: #64748b;
+
+        text-decoration: none;
+
+        border-radius: 13px;
+
+        -webkit-tap-highlight-color: transparent;
+
+        transition:
+            color 0.18s ease,
+            background 0.18s ease,
+            transform 0.18s ease;
+    }
+
+    .tilespot-mobile-nav-item:active {
+        transform: scale(0.92);
+    }
+
+    .tilespot-mobile-nav-item:hover {
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    .tilespot-mobile-nav-icon {
+        width: 27px;
+        height: 27px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 22px;
+        line-height: 1;
+
+        font-weight: 500;
+    }
+
+    .tilespot-mobile-nav-label {
+        max-width: 100%;
+
+        overflow: hidden;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        font-size: 10px;
+        line-height: 14px;
+
+        font-weight: 600;
+        letter-spacing: 0.01em;
+    }
+
+    /*
+    --------------------------------------------------------
+    ACTIVE NAVIGATION ITEM
+    --------------------------------------------------------
+    */
+
+    .tilespot-mobile-nav-item.tilespot-mobile-active {
+        color: #0f766e;
+        background: rgba(15, 118, 110, 0.08);
+    }
+
+    .tilespot-mobile-nav-item.tilespot-mobile-active
+    .tilespot-mobile-nav-icon {
+        font-weight: 700;
+    }
+
+    .tilespot-mobile-nav-item.tilespot-mobile-active::after {
+        content: "";
+
+        position: absolute;
+
+        left: 50%;
+        bottom: 2px;
+
+        width: 4px;
+        height: 4px;
+
+        border-radius: 50%;
+
+        background: currentColor;
+
+        transform: translateX(-50%);
+    }
+
+    /*
+    --------------------------------------------------------
+    SELL BUTTON
+    --------------------------------------------------------
+    */
+
+    .tilespot-mobile-sell {
+        color: #ffffff !important;
+
+        margin:
+            -19px
+            4px
+            4px
+            4px;
+
+        min-width: 55px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #0f766e,
+                #0d9488
+            );
+
+        border-radius: 17px;
+
+        box-shadow:
+            0 8px 20px
+            rgba(15, 118, 110, 0.28);
+    }
+
+    .tilespot-mobile-sell:hover {
+        color: #ffffff !important;
+    }
+
+    .tilespot-mobile-sell:active {
+        transform: scale(0.90);
+    }
+
+    .tilespot-mobile-sell-icon {
+        width: 31px;
+        height: 31px;
+
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+    /*
+    --------------------------------------------------------
+    EXISTING INSTALL/PWA BUTTON
+    --------------------------------------------------------
+    */
+
+    #install-app,
+    .install-app,
+    .pwa-install,
+    [data-pwa-install] {
+        max-width: calc(100vw - 32px);
+    }
+
+    /*
+    --------------------------------------------------------
+    MOBILE TOUCH EXPERIENCE
+    --------------------------------------------------------
+    */
+
+    button,
+    a,
+    input,
+    select,
+    textarea {
+        touch-action: manipulation;
+    }
+
+    /*
+    --------------------------------------------------------
+    SMALL PHONES
+    --------------------------------------------------------
+    */
+
+    @media (max-width: 380px) {
+
+        .tilespot-mobile-nav {
+            min-height: 64px;
+
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+
+        .tilespot-mobile-nav-item {
+            padding-left: 1px;
+            padding-right: 1px;
+        }
+
+        .tilespot-mobile-nav-icon {
+            width: 24px;
+            height: 24px;
+            font-size: 20px;
+        }
+
+        .tilespot-mobile-nav-label {
+            font-size: 9px;
+        }
+
+        .tilespot-mobile-sell {
+            min-width: 48px;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
+    }
+
+    /*
+    --------------------------------------------------------
+    LANDSCAPE PHONES
+    --------------------------------------------------------
+    */
+
+    @media (orientation: landscape) and (max-height: 500px) {
+
+        .tilespot-mobile-nav {
+            min-height: 56px;
+            padding-top: 3px;
+        }
+
+        .tilespot-mobile-nav-icon {
+            font-size: 18px;
+            height: 21px;
+        }
+
+        .tilespot-mobile-nav-label {
+            font-size: 9px;
+        }
+
+        body {
+            padding-bottom: 64px;
+        }
+    }
+}
+
+/*
+============================================================
+END TILESPOT STAGE 3
+============================================================
+*/

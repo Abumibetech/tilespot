@@ -577,6 +577,127 @@
         {% endif %}
 
     </nav>
+
+<!-- TILESPOT_STAGE3_MOBILE_NAV -->
+<nav
+    id="tilespot-mobile-nav"
+    class="tilespot-mobile-nav"
+    aria-label="Mobile navigation"
+>
+
+    <a
+        href="{% url 'home' %}"
+        class="tilespot-mobile-nav-item"
+        data-nav-name="home"
+        aria-label="Home"
+    >
+        <span class="tilespot-mobile-nav-icon">⌂</span>
+        <span class="tilespot-mobile-nav-label">Home</span>
+    </a>
+
+    <a
+        href="{% url 'market' %}"
+        class="tilespot-mobile-nav-item"
+        data-nav-name="browse"
+        aria-label="Browse tiles"
+    >
+        <span class="tilespot-mobile-nav-icon">▦</span>
+        <span class="tilespot-mobile-nav-label">Browse</span>
+    </a>
+
+    {% if user.is_authenticated %}
+
+        {% if user.profile.role == 'buyer' or user.profile.role == 'both' %}
+
+        <a
+            href="{% url 'saved_tiles' %}"
+            class="tilespot-mobile-nav-item"
+            data-nav-name="saved"
+            aria-label="Saved tiles"
+        >
+            <span class="tilespot-mobile-nav-icon">♡</span>
+            <span class="tilespot-mobile-nav-label">Saved</span>
+        </a>
+
+        {% endif %}
+
+        {% if user.profile.role == 'seller' or user.profile.role == 'both' %}
+
+        <a
+            href="{% url 'create_listing' %}"
+            class="tilespot-mobile-nav-item tilespot-mobile-sell"
+            data-nav-name="sell"
+            aria-label="Sell a tile"
+        >
+            <span class="tilespot-mobile-nav-icon tilespot-mobile-sell-icon">＋</span>
+            <span class="tilespot-mobile-nav-label">Sell</span>
+        </a>
+
+        {% endif %}
+
+        <a
+            href="{% url 'messages' %}"
+            class="tilespot-mobile-nav-item"
+            data-nav-name="messages"
+            aria-label="Messages"
+        >
+            <span class="tilespot-mobile-nav-icon">✉</span>
+            <span class="tilespot-mobile-nav-label">Messages</span>
+        </a>
+
+        {% if user.profile.role == 'seller' or user.profile.role == 'both' %}
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="tilespot-mobile-nav-item"
+            data-nav-name="dashboard"
+            aria-label="Dashboard"
+        >
+            <span class="tilespot-mobile-nav-icon">▣</span>
+            <span class="tilespot-mobile-nav-label">Dashboard</span>
+        </a>
+
+        {% else %}
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="tilespot-mobile-nav-item"
+            data-nav-name="profile"
+            aria-label="Profile"
+        >
+            <span class="tilespot-mobile-nav-icon">♙</span>
+            <span class="tilespot-mobile-nav-label">Profile</span>
+        </a>
+
+        {% endif %}
+
+    {% else %}
+
+        <a
+            href="{% url 'create_listing' %}"
+            class="tilespot-mobile-nav-item tilespot-mobile-sell"
+            data-nav-name="sell"
+            aria-label="Sell on Tilespot"
+        >
+            <span class="tilespot-mobile-nav-icon tilespot-mobile-sell-icon">＋</span>
+            <span class="tilespot-mobile-nav-label">Sell</span>
+        </a>
+
+        <a
+            href="{% url 'login' %}"
+            class="tilespot-mobile-nav-item"
+            data-nav-name="login"
+            aria-label="Login"
+        >
+            <span class="tilespot-mobile-nav-icon">⇥</span>
+            <span class="tilespot-mobile-nav-label">Login</span>
+        </a>
+
+    {% endif %}
+
+</nav>
+<!-- END TILESPOT_STAGE3_MOBILE_NAV -->
+
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     "use strict";
 
     let deferredPrompt = null;
@@ -117,3 +117,150 @@
         console.log("Tilespot was installed.");
     });
 })();
+
+
+
+/* TILESPOT_STAGE3_MOBILE_NAV_JS */
+
+(function () {
+    "use strict";
+
+    /*
+    ========================================================
+    TILESPOT MOBILE NAVIGATION
+    ========================================================
+    */
+
+    function initialiseTilespotMobileNavigation() {
+
+        const navigation = document.getElementById(
+            "tilespot-mobile-nav"
+        );
+
+        if (!navigation) {
+            return;
+        }
+
+        const items = navigation.querySelectorAll(
+            ".tilespot-mobile-nav-item"
+        );
+
+        if (!items.length) {
+            return;
+        }
+
+        /*
+        ----------------------------------------------------
+        CURRENT PAGE DETECTION
+        ----------------------------------------------------
+        */
+
+        const currentPath =
+            window.location.pathname
+                .replace(/\/+$/, "") || "/";
+
+        items.forEach(function (item) {
+
+            const href = item.getAttribute("href");
+
+            if (!href) {
+                return;
+            }
+
+            try {
+
+                const linkUrl = new URL(
+                    href,
+                    window.location.origin
+                );
+
+                const linkPath =
+                    linkUrl.pathname
+                        .replace(/\/+$/, "") || "/";
+
+                if (
+                    linkPath === currentPath ||
+                    (
+                        linkPath !== "/" &&
+                        currentPath.startsWith(
+                            linkPath + "/"
+                        )
+                    )
+                ) {
+                    item.classList.add(
+                        "tilespot-mobile-active"
+                    );
+
+                    item.setAttribute(
+                        "aria-current",
+                        "page"
+                    );
+                }
+
+            } catch (error) {
+                /*
+                 Ignore malformed/relative URLs.
+                Existing navigation remains functional.
+                */
+            }
+        });
+
+        /*
+        ----------------------------------------------------
+        TOUCH FEEDBACK
+        ----------------------------------------------------
+        */
+
+        items.forEach(function (item) {
+
+            item.addEventListener(
+                "touchstart",
+                function () {
+                    item.classList.add(
+                        "tilespot-mobile-touching"
+                    );
+                },
+                { passive: true }
+            );
+
+            item.addEventListener(
+                "touchend",
+                function () {
+                    window.setTimeout(
+                        function () {
+                            item.classList.remove(
+                                "tilespot-mobile-touching"
+                            );
+                        },
+                        100
+                    );
+                },
+                { passive: true }
+            );
+
+        });
+
+    }
+
+    /*
+    --------------------------------------------------------
+    DOM READY
+    --------------------------------------------------------
+    */
+
+    if (document.readyState === "loading") {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initialiseTilespotMobileNavigation
+        );
+
+    } else {
+
+        initialiseTilespotMobileNavigation();
+
+    }
+
+})();
+
+/* END TILESPOT_STAGE3_MOBILE_NAV_JS */
