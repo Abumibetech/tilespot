@@ -9,13 +9,29 @@
     "background_color": "#071019",
     "theme_color": "#071019",
     "lang": "en-NG",
-    "categories": ["shopping", "business", "marketplace"],
+    "categories": [
+        "shopping",
+        "business",
+        "marketplace"
+    ],
     "icons": [
         {
-            "src": "/static/images/tilespot-icon.svg",
-            "sizes": "any",
-            "type": "image/svg+xml",
-            "purpose": "any maskable"
+            "src": "/static/images/tilespot-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/static/images/tilespot-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/static/images/tilespot-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ]
 }

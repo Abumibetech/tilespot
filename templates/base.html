@@ -79,6 +79,7 @@
     >
 
     <link rel="manifest" href="/static/manifest.json">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
     <meta name="theme-color" content="#071019">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -522,7 +523,17 @@
 
 
     <script src="/static/js/pwa.js"></script>
-    <nav class="tilespot-mobile-nav pwa-safe-bottom" aria-label="Mobile navigation">
+    <button
+    type="button"
+    class="tilespot-install-button"
+    data-tilespot-install
+    hidden
+    aria-label="Install Tilespot app"
+>
+    <span aria-hidden="true">📲</span>
+    <span>Install Tilespot</span>
+</button>
+<nav class="tilespot-mobile-nav pwa-safe-bottom" aria-label="Mobile navigation">
 
         <a href="/" aria-label="Home">
             <span class="nav-icon">🏠</span>

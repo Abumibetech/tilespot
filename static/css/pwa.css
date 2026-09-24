@@ -1,4 +1,4 @@
-﻿html {
+html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
 }
@@ -109,5 +109,33 @@ a.btn {
     .tilespot-mobile-nav .nav-icon {
         font-size: 21px;
         line-height: 1;
+    }
+}
+
+.tilespot-install-button {
+    position: fixed;
+    right: 18px;
+    bottom: 86px;
+    z-index: 10000;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.28);
+    animation: tilespot-install-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes tilespot-install-pulse {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+@media (max-width: 768px) {
+    .tilespot-install-button {
+        left: 16px;
+        right: 16px;
+        bottom: 82px;
+        width: calc(100% - 32px);
     }
 }
