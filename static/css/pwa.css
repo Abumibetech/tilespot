@@ -1,0 +1,113 @@
+﻿html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    overscroll-behavior-y: contain;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+    touch-action: manipulation;
+}
+
+button,
+.btn,
+a.btn {
+    min-height: 44px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 76px;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+
+    button,
+    .btn {
+        min-height: 46px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (display-mode: standalone) {
+    body {
+        overscroll-behavior-y: none;
+    }
+}
+
+.tilespot-install-button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 12px;
+    padding: 12px 18px;
+    background: #00c2ff;
+    color: #071019;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.tilespot-install-button.tilespot-install-visible {
+    display: inline-flex;
+}
+
+@media (max-width: 768px) {
+    .tilespot-mobile-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+        min-height: 64px;
+        padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+        background: rgba(7, 16, 25, 0.97);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .tilespot-mobile-nav a {
+        min-width: 58px;
+        min-height: 48px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        color: rgba(255, 255, 255, 0.65);
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 12px;
+    }
+
+    .tilespot-mobile-nav a:hover,
+    .tilespot-mobile-nav a.active {
+        color: #00f5d4;
+    }
+
+    .tilespot-mobile-nav .nav-icon {
+        font-size: 21px;
+        line-height: 1;
+    }
+}

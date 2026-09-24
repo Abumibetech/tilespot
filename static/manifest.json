@@ -1,0 +1,21 @@
+﻿{
+    "name": "Tilespot - Nigerian Tile Marketplace",
+    "short_name": "Tilespot",
+    "description": "Find, compare and buy tiles from sellers across Nigeria.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#071019",
+    "theme_color": "#071019",
+    "lang": "en-NG",
+    "categories": ["shopping", "business", "marketplace"],
+    "icons": [
+        {
+            "src": "/static/images/tilespot-icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}
