@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 
 <!doctype html>
 
@@ -15,7 +15,7 @@
 
     <title>
         {% block title %}
-            Tilespot — Nigeria's modern tile marketplace
+            Tilespot â€” Nigeria's modern tile marketplace
         {% endblock %}
     </title>
 
@@ -36,7 +36,7 @@
 
     <meta
         property="og:title"
-        content="Tilespot — Nigeria's modern tile marketplace"
+        content="Tilespot â€” Nigeria's modern tile marketplace"
     >
 
     <meta
@@ -85,7 +85,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Tilespot">
-    <link rel="stylesheet" href="/static/css/pwa.css">
+    <link rel="stylesheet" href="/static/css/pwa.css?v=20260925final">
 </head>
 
 
@@ -96,11 +96,11 @@
 
         TILESPOT MARKET
 
-        <span>•</span>
+        <span>â€¢</span>
 
         Find it. Compare it. Build it.
 
-        <span>•</span>
+        <span>â€¢</span>
 
         Built for Nigeria
 
@@ -182,7 +182,7 @@
                     title="Notifications"
                 >
 
-                    ◉
+                    â—‰
 
                     {% if unread_notifications %}
 
@@ -299,7 +299,7 @@
                         {% endif %}
 
                         <small>
-                            Explore →
+                            Explore â†’
                         </small>
 
                     </a>
@@ -329,7 +329,7 @@
                         {% endif %}
 
                         <small>
-                            Explore →
+                            Explore â†’
                         </small>
 
                     </a>
@@ -363,7 +363,7 @@
                             type="button"
                             aria-label="Close notification"
                         >
-                            ×
+                            Ã—
                         </button>
 
                     </div>
@@ -506,11 +506,11 @@
 
         <div class="footerbottom">
 
-            © {% now 'Y' %}
+            Â© {% now 'Y' %}
 
             Tilespot
 
-            · Built for Nigeria
+            Â· Built for Nigeria
 
         </div>
 
@@ -656,3 +656,4 @@
 </body>
 
 </html>
+
