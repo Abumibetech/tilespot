@@ -13,3 +13,394 @@ body{background:#f8f7f3}
 .cardfoot{display:flex;justify-content:space-between;border-top:1px solid #eee9df;margin-top:13px;padding-top:11px;font-size:10px;color:#7b857f}.roombadge{position:absolute;left:12px;bottom:12px;background:#fff;color:#17251f;padding:7px 9px;font-size:9px;font-weight:900;letter-spacing:.08em;box-shadow:0 8px 20px rgba(0,0,0,.12)}.tilecard{transition:transform .35s,box-shadow .35s}.tilecard:hover{transform:translateY(-8px);box-shadow:0 25px 55px rgba(15,30,24,.12)}.tilephoto img{transition:transform .8s cubic-bezier(.2,.7,.2,1)}.tilecard:hover .tilephoto img{transform:scale(1.06)}
 .cataloghero{position:relative;min-height:530px;overflow:hidden;color:#fff;display:flex;align-items:center}.cataloghero-bg{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,17,13,.92),rgba(5,17,13,.48)),url('https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=2200&q=90') center/cover;transform:scale(1.03)}.cataloghero-copy{position:relative;z-index:1;width:min(1150px,90%);margin:auto}.cataloghero h1{font:800 74px/1 Manrope;letter-spacing:-.05em;margin:10px 0}.cataloghero h1 em{color:var(--gold2)}.cataloghero p{max-width:650px;color:#e1e8e4;font-size:17px}.catalogsearch{margin-top:30px;display:flex;max-width:760px;background:#fff;padding:7px;border-radius:5px}.catalogsearch input{flex:1;border:0;padding:16px;font-size:14px;outline:0}.catalogsearch .btn{border:0}.sellercontacts{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.contactpill{border:1px solid #d9d5cc;background:#fff;padding:10px 15px;font-size:11px;font-weight:800}.contactpill.whatsapp{background:#e9f6ef;border-color:#c6e6d3;color:#17643d}.latest{padding-top:20px}
 @media(max-width:950px){.hero-market h1,.cataloghero h1{font-size:58px}.hero-stamp{right:4%;bottom:30px}.roomfinder{grid-template-columns:1fr}.roomfinder-copy{padding:55px}.brandspot .brandrow{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.hero-market{min-height:760px}.hero-market h1,.cataloghero h1{font-size:47px}.hero-stamp{display:none}.adlabel{padding:0 10px}.adtrack a{padding:0 15px}.cataloghero{min-height:580px}.catalogsearch{display:block;background:transparent;padding:0}.catalogsearch input{width:100%;margin-bottom:8px}.catalogsearch .btn{width:100%}.roomfinder h2{font-size:38px}.roomfinder-copy{padding:40px 25px}.brandspot .brandrow{grid-template-columns:1fr}.roomlinks{grid-template-columns:1fr}}
+
+/* =========================================================
+   TILESPOT_STAGE5C_SAFE_MOBILE_SEARCH
+   Mobile marketplace search/filter UX only.
+   Does NOT modify tile images or tile card dimensions.
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    /* Marketplace search */
+    .searchbox {
+        display: block !important;
+        width: 100%;
+        padding: 10px !important;
+        border-radius: 16px;
+    }
+
+    .searchbox > div {
+        width: 100%;
+        padding: 0 !important;
+        margin-bottom: 8px;
+        border-right: 0 !important;
+        border-bottom: 0 !important;
+    }
+
+    .searchbox input,
+    .searchbox select {
+        min-height: 48px;
+        width: 100%;
+        border-radius: 12px;
+        padding: 12px 14px;
+        box-sizing: border-box;
+    }
+
+    .searchbox .btn,
+    .searchbox button {
+        width: 100%;
+        min-height: 48px;
+        border-radius: 12px;
+    }
+
+    /* Catalog search */
+    .catalogsearch {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .catalogsearch input,
+    .catalogsearch select {
+        min-height: 48px;
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+
+    .catalogsearch .btn {
+        min-height: 48px;
+        border-radius: 12px;
+    }
+
+    /* Filter/result header */
+    .resulthead {
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    /* Prevent horizontal overflow */
+    .results,
+    .catalog,
+    .cataloghero,
+    .catalogsearch {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Better touch targets without changing cards */
+    .btn,
+    button,
+    select,
+    input {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Smooth mobile scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .searchbox {
+        padding: 8px !important;
+    }
+
+    .searchbox input,
+    .searchbox select,
+    .searchbox .btn,
+    .searchbox button {
+        min-height: 46px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+}
+
+/* END TILESPOT_STAGE5C_SAFE_MOBILE_SEARCH */
+
+
+/* =========================================================
+   TILESPOT_STAGE5D_MOBILE_TOUCH
+   Mobile marketplace touch interaction.
+   Does NOT alter tile image/card dimensions.
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    /* Existing tile cards get a subtle touch response */
+    .tilecard {
+        -webkit-tap-highlight-color: transparent;
+        transition:
+            transform .18s ease,
+            box-shadow .18s ease;
+    }
+
+    .tilecard.tilespot-touching {
+        transform: scale(.985);
+    }
+
+    /* Make the existing tile image link feel responsive */
+    .tilephoto a {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Existing favorite button */
+    .tile-card-favorite {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        transition:
+            transform .16s ease,
+            background-color .16s ease;
+    }
+
+    .tile-card-favorite:active {
+        transform: scale(.90);
+    }
+
+    /* Existing footer/contact links */
+    .tilecard a {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Prevent accidental text selection while tapping */
+    .tilecard,
+    .tilecard button {
+        user-select: none;
+        -webkit-user-select: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .tilecard,
+    .tile-card-favorite {
+        transition: none !important;
+    }
+
+}
+
+/* END TILESPOT_STAGE5D_MOBILE_TOUCH */
+
+
+/* =========================================================
+   TILESPOT_STAGE5E_MOBILE_DETAIL
+   Mobile tile-detail UX only.
+   Existing gallery dimensions and desktop layout preserved.
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    /* Detail page spacing */
+    .detail {
+        width: 94%;
+        margin: 24px auto 55px;
+        gap: 24px;
+    }
+
+    /* Gallery remains controlled by the existing layout */
+    .gallery {
+        width: 100%;
+        gap: 7px;
+    }
+
+    .galleryimg {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .galleryimg:first-child {
+        border-radius: 14px;
+    }
+
+    /* Product information */
+    .detailmain {
+        padding: 0;
+    }
+
+    .detailmain .tilemeta {
+        margin-bottom: 8px;
+    }
+
+    .detailmain h1 {
+        font-size: clamp(32px, 9vw, 42px);
+        line-height: 1.04;
+        margin: 10px 0 14px;
+    }
+
+    .lead {
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    /* Seller row */
+    .sellerline {
+        margin: 20px 0;
+        padding: 13px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+    }
+
+    /* Price / stock */
+    .pricebox {
+        margin: 18px 0;
+        padding: 18px;
+        border-radius: 14px;
+        gap: 16px;
+    }
+
+    .pricebox strong {
+        font-size: 23px;
+    }
+
+    /* Specifications */
+    .specgrid {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .specgrid div {
+        padding: 13px 11px;
+        min-height: 62px;
+        justify-content: center;
+    }
+
+    .specgrid b {
+        font-size: 13px;
+    }
+
+    /* WhatsApp / Call */
+    .sellercontacts {
+        margin: 18px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+    }
+
+    .contactpill {
+        min-height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    /* Main actions */
+    .detailactions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+        margin-top: 14px;
+    }
+
+    .detailactions .btn,
+    .detailactions .btnbtn-dark {
+        width: 100%;
+        min-height: 48px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        padding: 11px 9px;
+        text-align: center;
+    }
+
+    /* Questions / comments / enquiry */
+    .detailbelow {
+        width: 94%;
+        margin-bottom: 70px;
+        gap: 30px;
+    }
+
+    .tabs {
+        position: sticky;
+        top: 76px;
+        z-index: 10;
+        background: var(--paper);
+        padding-top: 5px;
+        gap: 0;
+        justify-content: space-between;
+    }
+
+    .tabs a {
+        flex: 1;
+        text-align: center;
+        padding: 13px 5px;
+        font-size: 12px;
+    }
+
+    .panel h2 {
+        font-size: 24px;
+    }
+
+    .qa,
+    .comment {
+        padding: 15px 0;
+    }
+
+    .panel textarea {
+        min-height: 100px;
+        border-radius: 9px;
+        box-sizing: border-box;
+    }
+
+    .panel .btn {
+        min-height: 46px;
+        border-radius: 9px;
+        margin-top: 8px;
+    }
+
+    /* Seller enquiry card */
+    .sellerbox {
+        border-radius: 14px;
+        padding: 20px;
+    }
+
+    .sellerbox .btn {
+        min-height: 48px;
+        border-radius: 10px;
+    }
+
+    /* Related tiles */
+    .section .sectionhead {
+        margin-bottom: 18px;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .sellercontacts,
+    .detailactions {
+        grid-template-columns: 1fr;
+    }
+
+    .pricebox {
+        padding: 15px;
+    }
+
+    .specgrid div {
+        padding: 11px 9px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .detail *,
+    .detailbelow * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+
+}
+
+/* END TILESPOT_STAGE5E_MOBILE_DETAIL */

@@ -740,3 +740,476 @@ END TILESPOT STAGE 3
 /* ============================================================
    END TILESPOT_STAGE4_MOBILE_POLISH_CSS
    ============================================================ */
+
+/* =========================================================
+   TILESPOT_STAGE5F_MOBILE_NAV_POLISH
+   Bottom navigation behavior and safe-area polish.
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    #tilespot-mobile-nav {
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+        min-height: calc(64px + env(safe-area-inset-bottom));
+    }
+
+    #tilespot-mobile-nav .tilespot-mobile-nav-item {
+        min-height: 52px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    #tilespot-mobile-nav .tilespot-mobile-nav-item:active {
+        transform: scale(.94);
+    }
+
+    /* Keep page content above the fixed navigation */
+    body {
+        padding-bottom: calc(
+            76px + env(safe-area-inset-bottom)
+        );
+    }
+
+    /* Don't create excess space inside the fixed nav itself */
+    #tilespot-mobile-nav {
+        box-sizing: border-box;
+    }
+
+    /* Installed app gets a little more breathing room */
+    body.tilespot-standalone {
+        padding-bottom: calc(
+            82px + env(safe-area-inset-bottom)
+        );
+    }
+
+}
+
+@media (display-mode: standalone) and (max-width: 700px) {
+
+    #tilespot-mobile-nav {
+        box-shadow:
+            0 -8px 30px rgba(16,39,31,.12);
+    }
+
+}
+
+/* END TILESPOT_STAGE5F_MOBILE_NAV_POLISH */
+
+
+/* ============================================================
+   TILESPOT_MOBILE_FINAL_UPGRADE_CSS
+
+   Final mobile/app UX layer.
+
+   IMPORTANT:
+   This layer is additive.
+   Existing desktop layout, tile image dimensions and
+   marketplace structure are intentionally preserved.
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        overflow-x: hidden;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /*
+       General mobile controls
+    */
+
+    .btn,
+    .btnbtn-dark,
+    button,
+    input[type="submit"],
+    input[type="button"],
+    .contactpill,
+    .action,
+    .actionbtn {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+
+    /*
+       Mobile forms
+    */
+
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        border-radius: 12px;
+    }
+
+    textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
+
+    form {
+        max-width: 100%;
+    }
+
+    form p {
+        margin-bottom: 14px;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 700;
+    }
+
+    form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+    form select,
+    form textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /*
+       File uploads
+    */
+
+    input[type="file"] {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 48px;
+        padding: 10px;
+        border: 1px dashed rgba(0,0,0,.18);
+        background: rgba(255,255,255,.7);
+    }
+
+    /*
+       Dashboard
+    */
+
+    .dashboard,
+    .dash,
+    .dashboardwrap,
+    .dashboard-wrap {
+        max-width: 100%;
+    }
+
+    .dashboard .card,
+    .dashboard .panel,
+    .dashboard .box,
+    .dash .card,
+    .dash .panel,
+    .dash .box {
+        max-width: 100%;
+    }
+
+    /*
+       Dashboard tables
+    */
+
+    .dashboard table,
+    .dash table,
+    .tablewrap,
+    .table-wrap {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        max-width: 100%;
+    }
+
+    /*
+       Messages / notifications
+    */
+
+    .messages,
+    .message-list,
+    .conversation,
+    .inbox,
+    .notifications,
+    .notification-list {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    /*
+       Profile
+    */
+
+    .profile,
+    .profilepage,
+    .profile-page {
+        max-width: 100%;
+    }
+
+    /*
+       IMPORTANT:
+       No tile image dimensions are changed here.
+    */
+
+    .tilecard,
+    .card,
+    .market-card,
+    .notification-item,
+    .message-item {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .tilecard:active,
+    .card:active,
+    .market-card:active {
+        transform: translateY(1px);
+    }
+
+    /*
+       Search controls
+    */
+
+    .searchbox input,
+    .catalogsearch input,
+    .searchbox select,
+    .catalogsearch select {
+        min-height: 48px;
+    }
+
+    /*
+       Long text protection
+    */
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    span,
+    strong,
+    small,
+    a {
+        overflow-wrap: anywhere;
+    }
+
+    /*
+       Mobile section width
+    */
+
+    .section,
+    .catalogwrap,
+    .detail,
+    .detailbelow {
+        max-width: calc(100% - 24px);
+    }
+
+    /*
+       Seller contact buttons
+    */
+
+    .sellercontacts {
+        width: 100%;
+    }
+
+    .sellercontacts .contactpill {
+        flex: 1 1 140px;
+        text-align: center;
+    }
+
+    /*
+       Detail action buttons
+    */
+
+    .detailactions {
+        width: 100%;
+    }
+
+    .detailactions .btn,
+    .detailactions a {
+        flex: 1 1 150px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /*
+       Seller inquiry box
+    */
+
+    .sellerbox {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /*
+       Existing modal/dialog components
+    */
+
+    .modal,
+    .dialog,
+    .popup {
+        max-width: calc(100vw - 24px);
+        max-height: calc(100vh - 32px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /*
+       Standalone PWA safe area
+    */
+
+    body.tilespot-standalone {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    /*
+       Mobile navigation safe area
+    */
+
+    #tilespot-mobile-nav {
+        padding-bottom: max(
+            10px,
+            env(safe-area-inset-bottom)
+        );
+    }
+
+    /*
+       Scroll area protection
+    */
+
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+        body {
+            scroll-padding-bottom: calc(
+                90px + env(safe-area-inset-bottom)
+            );
+        }
+    }
+}
+
+
+/* ------------------------------------------------------------
+   Small phones
+   ------------------------------------------------------------ */
+
+@media (max-width: 480px) {
+
+    .section,
+    .catalogwrap,
+    .detail,
+    .detailbelow {
+        width: calc(100% - 20px);
+        max-width: calc(100% - 20px);
+    }
+
+    .detailactions {
+        flex-direction: column;
+    }
+
+    .detailactions .btn,
+    .detailactions a {
+        width: 100%;
+        flex-basis: auto;
+    }
+
+    .sellercontacts {
+        flex-direction: column;
+    }
+
+    .sellercontacts .contactpill {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .pricebox {
+        flex-direction: column;
+    }
+
+    .tabs {
+        gap: 14px;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+    }
+
+    .tabs::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+/* ------------------------------------------------------------
+   Reduced motion
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* END TILESPOT_MOBILE_FINAL_UPGRADE_CSS */
+
+/* ============================================================
+   TILESPOT_FINAL_TOUCH_FEEDBACK
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .tilespot-final-pressed {
+
+        opacity: .82;
+
+        transform: scale(.985);
+
+        transition:
+            transform .08s ease,
+            opacity .08s ease;
+    }
+
+
+    .tilespot-app-ready {
+        visibility: visible;
+    }
+
+
+    body.tilespot-mobile {
+        overscroll-behavior-x: none;
+    }
+
+
+    body.tilespot-mobile img {
+        max-width: 100%;
+    }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .tilespot-final-pressed {
+
+        transform: none;
+
+        opacity: 1;
+    }
+}
+
+
+/* END TILESPOT_FINAL_TOUCH_FEEDBACK */

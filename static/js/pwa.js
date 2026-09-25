@@ -453,3 +453,347 @@
 /* ============================================================
    END TILESPOT_STAGE4_MOBILE_POLISH_JS
    ============================================================ */
+
+/* =========================================================
+   TILESPOT_STAGE5D_MOBILE_TOUCH_JS
+   ========================================================= */
+
+(function () {
+    "use strict";
+
+    if (window.matchMedia("(max-width: 600px)").matches) {
+
+        document.addEventListener("touchstart", function (event) {
+
+            const card = event.target.closest(".tilecard");
+
+            if (!card) {
+                return;
+            }
+
+            card.classList.add("tilespot-touching");
+
+        }, { passive: true });
+
+        document.addEventListener("touchend", function (event) {
+
+            const card = event.target.closest(".tilecard");
+
+            if (!card) {
+                return;
+            }
+
+            window.setTimeout(function () {
+                card.classList.remove("tilespot-touching");
+            }, 120);
+
+        }, { passive: true });
+
+        document.addEventListener("touchcancel", function (event) {
+
+            const card = event.target.closest(".tilecard");
+
+            if (!card) {
+                return;
+            }
+
+            card.classList.remove("tilespot-touching");
+
+        }, { passive: true });
+    }
+
+})();
+
+/* END TILESPOT_STAGE5D_MOBILE_TOUCH_JS */
+
+
+/* =========================================================
+   TILESPOT_STAGE5F_MOBILE_NAV_POLISH_JS
+   ========================================================= */
+
+(function () {
+    "use strict";
+
+    function updateTilespotStandaloneClass() {
+        const standalone =
+            window.matchMedia &&
+            window.matchMedia("(display-mode: standalone)").matches;
+
+        if (standalone) {
+            document.body.classList.add("tilespot-standalone");
+        } else {
+            document.body.classList.remove("tilespot-standalone");
+        }
+    }
+
+    function markCurrentNavigationItem() {
+        const nav = document.getElementById("tilespot-mobile-nav");
+
+        if (!nav) {
+            return;
+        }
+
+        const currentPath =
+            window.location.pathname.replace(/\/+$/, "") || "/";
+
+        nav.querySelectorAll("a[data-nav-name]").forEach(function (link) {
+
+            const linkPath =
+                new URL(link.href, window.location.origin)
+                    .pathname
+                    .replace(/\/+$/, "") || "/";
+
+            const isHome =
+                linkPath === "/" && currentPath === "/";
+
+            const isMatch =
+                linkPath !== "/" &&
+                currentPath === linkPath;
+
+            if (isHome || isMatch) {
+                link.classList.add("is-current");
+                link.setAttribute("aria-current", "page");
+            } else {
+                link.classList.remove("is-current");
+                link.removeAttribute("aria-current");
+            }
+
+        });
+    }
+
+    function initTilespotMobileNavigation() {
+        updateTilespotStandaloneClass();
+        markCurrentNavigationItem();
+
+        window.addEventListener("pageshow", markCurrentNavigationItem);
+
+        window.addEventListener("resize", function () {
+            updateTilespotStandaloneClass();
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initTilespotMobileNavigation
+        );
+    } else {
+        initTilespotMobileNavigation();
+    }
+
+})();
+
+/* END TILESPOT_STAGE5F_MOBILE_NAV_POLISH_JS */
+
+
+/* ============================================================
+   TILESPOT_MOBILE_FINAL_UPGRADE_JS
+
+   Final mobile/app interaction layer.
+   Additive only.
+   ============================================================ */
+
+(function () {
+
+    "use strict";
+
+
+    function isMobileViewport() {
+
+        return window.matchMedia(
+            "(max-width: 900px)"
+        ).matches;
+    }
+
+
+    function setupMobileInteractionLayer() {
+
+        if (!document.body) {
+            return;
+        }
+
+
+        document.body.classList.toggle(
+            "tilespot-mobile",
+            isMobileViewport()
+        );
+
+
+        /*
+         * Mobile touch feedback
+         */
+
+        var selectors = [
+            ".btn",
+            ".btnbtn-dark",
+            "button",
+            ".contactpill",
+            ".tilecard a",
+            ".tilecard button",
+            ".mobile-nav-item",
+            "#tilespot-mobile-nav a"
+        ];
+
+
+        var elements = document.querySelectorAll(
+            selectors.join(",")
+        );
+
+
+        elements.forEach(function (element) {
+
+            if (
+                element.dataset.tilespotFinalTouchBound === "1"
+            ) {
+                return;
+            }
+
+
+            element.dataset.tilespotFinalTouchBound = "1";
+
+
+            element.addEventListener(
+                "touchstart",
+                function () {
+
+                    element.classList.add(
+                        "tilespot-final-pressed"
+                    );
+
+                },
+                {
+                    passive: true
+                }
+            );
+
+
+            element.addEventListener(
+                "touchend",
+                function () {
+
+                    window.setTimeout(
+                        function () {
+
+                            element.classList.remove(
+                                "tilespot-final-pressed"
+                            );
+
+                        },
+                        80
+                    );
+
+                },
+                {
+                    passive: true
+                }
+            );
+
+
+            element.addEventListener(
+                "touchcancel",
+                function () {
+
+                    element.classList.remove(
+                        "tilespot-final-pressed"
+                    );
+
+                },
+                {
+                    passive: true
+                }
+            );
+
+        });
+
+    }
+
+
+    /*
+     * Recalculate mobile state when screen size changes.
+     */
+
+    window.addEventListener(
+        "resize",
+        setupMobileInteractionLayer,
+        {
+            passive: true
+        }
+    );
+
+
+    window.addEventListener(
+        "pageshow",
+        setupMobileInteractionLayer
+    );
+
+
+    if (
+        document.readyState === "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            setupMobileInteractionLayer
+        );
+
+    } else {
+
+        setupMobileInteractionLayer();
+
+    }
+
+
+    /*
+     * Browser back/forward navigation.
+     */
+
+    window.addEventListener(
+        "popstate",
+        function () {
+
+            window.setTimeout(
+                setupMobileInteractionLayer,
+                50
+            );
+
+        }
+    );
+
+
+    /*
+     * App ready marker.
+     */
+
+    function markAppReady() {
+
+        if (!document.body) {
+            return;
+        }
+
+
+        document.body.classList.add(
+            "tilespot-app-ready"
+        );
+
+    }
+
+
+    if (
+        document.readyState === "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            markAppReady
+        );
+
+    } else {
+
+        markAppReady();
+
+    }
+
+})();
+
+
+/* END TILESPOT_MOBILE_FINAL_UPGRADE_JS */
