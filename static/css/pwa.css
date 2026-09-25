@@ -1686,3 +1686,62 @@ END TILESPOT STAGE 3
 /* ============================================================
    END TILESPOT CSS ICONS
    ============================================================ */
+
+/* =========================================================
+   TILESPOT SCROLL FIX
+   Restore normal page/document scrolling on mobile and desktop
+   ========================================================= */
+
+html,
+body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100%;
+}
+
+body {
+    -webkit-overflow-scrolling: touch;
+}
+
+#page,
+.page,
+.site,
+.site-content,
+main,
+.main-content,
+.content,
+.container {
+    max-height: none !important;
+    overflow-y: visible !important;
+}
+
+@media (max-width: 768px) {
+    html,
+    body {
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        height: auto !important;
+        min-height: 100vh;
+        position: static !important;
+    }
+
+    body {
+        touch-action: pan-y !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .tilespot-mobile-nav {
+        position: fixed !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        z-index: 9999 !important;
+    }
+}
+
+/* Keep the bottom navigation fixed without locking the page */
+html:has(.tilespot-mobile-nav),
+body:has(.tilespot-mobile-nav) {
+    overflow-y: auto !important;
+}
