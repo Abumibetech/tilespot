@@ -1213,3 +1213,476 @@ END TILESPOT STAGE 3
 
 
 /* END TILESPOT_FINAL_TOUCH_FEEDBACK */
+
+
+/* ============================================================
+   TILESPOT MOBILE FINAL UI FIX
+   Responsive navigation, buttons, login visibility and icons.
+   Additive layer - existing styles remain intact.
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    main {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* --------------------------------------------------------
+       MOBILE HEADER
+       -------------------------------------------------------- */
+
+    .nav {
+        width: 100%;
+        min-height: 64px;
+        padding: 10px 14px;
+        gap: 10px;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 100;
+    }
+
+    .brand {
+        min-width: 0;
+        flex: 1 1 auto;
+        white-space: nowrap;
+    }
+
+    .navactions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 7px;
+        min-width: 0;
+        flex-shrink: 0;
+    }
+
+    .navactions .signin,
+    .navactions .btn {
+        white-space: nowrap;
+    }
+
+    /* Keep logout visible and usable on small screens. */
+    .navactions .btn-dark {
+        min-height: 42px;
+        padding: 10px 13px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 13px;
+        line-height: 1;
+        text-decoration: none;
+        box-sizing: border-box;
+    }
+
+    /* --------------------------------------------------------
+       SMALL MOBILE HEADER
+       -------------------------------------------------------- */
+
+    @media (max-width: 600px) {
+
+        .topbar {
+            font-size: 10px;
+            line-height: 1.3;
+            padding: 7px 10px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .nav {
+            min-height: 58px;
+            padding: 8px 10px;
+        }
+
+        .brand {
+            font-size: 18px;
+        }
+
+        .brand .logo {
+            width: 29px;
+            height: 29px;
+            flex-shrink: 0;
+        }
+
+        .navactions {
+            gap: 5px;
+        }
+
+        .navactions .signin {
+            display: none;
+        }
+
+        .navactions .btn-dark {
+            min-height: 40px;
+            padding: 9px 11px;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
+        .navactions .avatar,
+        .navactions .iconlink {
+            display: none;
+        }
+
+        .hamb {
+            min-width: 40px;
+            min-height: 40px;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            flex-shrink: 0;
+            font-size: 0;
+        }
+
+        .hamb::before {
+            content: "";
+            width: 19px;
+            height: 14px;
+            display: block;
+            border-top: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            position: relative;
+        }
+
+        .hamb::after {
+            content: "";
+            width: 19px;
+            height: 2px;
+            display: block;
+            background: currentColor;
+            position: absolute;
+        }
+
+        /* Logged-in logout button stays visible. */
+        body.menu-open .navactions .btn-dark {
+            display: inline-flex;
+        }
+
+        /* ----------------------------------------------------
+           MOBILE CONTENT
+           ---------------------------------------------------- */
+
+        .container,
+        .wrap,
+        .page,
+        .shell {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        img,
+        video,
+        iframe {
+            max-width: 100%;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Prevent long text from pushing the page sideways. */
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        a,
+        span,
+        small {
+            overflow-wrap: anywhere;
+        }
+
+        /* ----------------------------------------------------
+           LOGIN / REGISTER BUTTON VISIBILITY
+           ---------------------------------------------------- */
+
+        .signin,
+        a.signin,
+        .btn,
+        button,
+        input[type="submit"],
+        input[type="button"] {
+            -webkit-appearance: none;
+        }
+
+        /* Dark text on light login/register controls. */
+        .signin {
+            color: #0b1714 !important;
+            background: #ffffff;
+        }
+
+        .signin:hover,
+        .signin:focus,
+        .signin:active {
+            color: #0b1714 !important;
+        }
+
+        /* Make primary buttons readable on both light and dark
+           backgrounds. */
+        .btn-dark {
+            background: #0b1714 !important;
+            color: #ffffff !important;
+            border: 1px solid #0b1714 !important;
+        }
+
+        .btn-dark:hover,
+        .btn-dark:focus,
+        .btn-dark:active {
+            background: #162923 !important;
+            color: #ffffff !important;
+        }
+
+        /* Login form controls remain visible on white cards. */
+        input,
+        select,
+        textarea {
+            color: #0b1714;
+            background: #ffffff;
+            border-color: #cbd5d1;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #6b7773;
+            opacity: 1;
+        }
+
+        /* ----------------------------------------------------
+           MOBILE BOTTOM NAV
+           ---------------------------------------------------- */
+
+        #tilespot-mobile-nav {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding-left: max(8px, env(safe-area-inset-left));
+            padding-right: max(8px, env(safe-area-inset-right));
+            padding-bottom: max(7px, env(safe-area-inset-bottom));
+            z-index: 9999;
+        }
+
+        #tilespot-mobile-nav a {
+            min-width: 0;
+            min-height: 58px;
+            padding: 7px 4px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 3px;
+            overflow: hidden;
+        }
+
+        .tilespot-mobile-nav-icon {
+            width: 26px;
+            height: 26px;
+            min-width: 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            line-height: 1;
+            font-family:
+                "Segoe UI Symbol",
+                "Noto Sans Symbols 2",
+                Arial,
+                sans-serif;
+        }
+
+        .tilespot-mobile-nav-label {
+            font-size: 10px;
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+
+        .tilespot-mobile-sell {
+            min-width: 62px;
+        }
+
+    }
+
+    /* --------------------------------------------------------
+       VERY SMALL PHONES
+       -------------------------------------------------------- */
+
+    @media (max-width: 380px) {
+
+        .brand > span:last-child {
+            font-size: 16px;
+        }
+
+        .navactions .btn-dark {
+            padding-left: 8px;
+            padding-right: 8px;
+            font-size: 11px;
+        }
+
+        #tilespot-mobile-nav a {
+            min-height: 55px;
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+
+        .tilespot-mobile-nav-icon {
+            width: 23px;
+            height: 23px;
+            min-width: 23px;
+            font-size: 19px;
+        }
+
+        .tilespot-mobile-nav-label {
+            font-size: 9px;
+        }
+
+    }
+
+}
+
+
+/* ============================================================
+   END TILESPOT MOBILE FINAL UI FIX
+   ============================================================ */
+
+
+/* ============================================================
+   TILESPOT CSS ICONS
+   Avoid emoji/font encoding problems on mobile devices.
+   ============================================================ */
+
+.tilespot-mobile-nav-icon {
+    position: relative;
+    font-size: 0 !important;
+}
+
+.tilespot-mobile-nav-icon::before {
+    display: block;
+    width: 22px;
+    height: 22px;
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+    font-family:
+        "Segoe UI Symbol",
+        "Noto Sans Symbols 2",
+        Arial,
+        sans-serif;
+}
+
+/* Home */
+.tilespot-mobile-nav-item[data-nav-name="home"]
+.tilespot-mobile-nav-icon::before {
+    content: "⌂";
+}
+
+/* Browse */
+.tilespot-mobile-nav-item[data-nav-name="browse"]
+.tilespot-mobile-nav-icon::before {
+    content: "⌕";
+}
+
+/* Saved */
+.tilespot-mobile-nav-item[data-nav-name="saved"]
+.tilespot-mobile-nav-icon::before {
+    content: "♡";
+}
+
+/* Sell */
+.tilespot-mobile-nav-item[data-nav-name="sell"]
+.tilespot-mobile-nav-icon::before {
+    content: "+";
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+}
+
+/* Messages */
+.tilespot-mobile-nav-item[data-nav-name="messages"]
+.tilespot-mobile-nav-icon::before {
+    content: "✉";
+}
+
+/* Dashboard */
+.tilespot-mobile-nav-item[data-nav-name="dashboard"]
+.tilespot-mobile-nav-icon::before {
+    content: "▦";
+}
+
+/* Profile */
+.tilespot-mobile-nav-item[data-nav-name="profile"]
+.tilespot-mobile-nav-icon::before {
+    content: "♙";
+}
+
+/* Login */
+.tilespot-mobile-nav-item[data-nav-name="login"]
+.tilespot-mobile-nav-icon::before {
+    content: "↪";
+}
+
+/* Current/active navigation */
+.tilespot-mobile-nav-item.is-current
+.tilespot-mobile-nav-icon::before {
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   TOP NAVIGATION ICONS
+   Add clean visual symbols without relying on emoji fonts.
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .navlinks a {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .navlinks a[href*="sort=popular"]::before {
+        content: "★";
+        font-size: 14px;
+        line-height: 1;
+    }
+
+    .navlinks a[href*="category=outdoor"]::before {
+        content: "▦";
+        font-size: 14px;
+        line-height: 1;
+    }
+
+    .navlinks a[href*="create_tile"]::before {
+        content: "+";
+        font-size: 18px;
+        line-height: 1;
+        font-weight: 800;
+    }
+
+}
+
+
+/* ============================================================
+   END TILESPOT CSS ICONS
+   ============================================================ */

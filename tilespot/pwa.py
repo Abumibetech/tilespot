@@ -31,7 +31,7 @@ def manifest(request):
 
 def service_worker(request):
     javascript = r'''
-const CACHE_NAME = "tilespot-static-v1";
+const CACHE_NAME = "tilespot-static-v2";
 
 self.addEventListener("install", event => {
     self.skipWaiting();
