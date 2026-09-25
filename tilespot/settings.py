@@ -3,7 +3,7 @@ import os
 BASE_DIR=Path(__file__).resolve().parent.parent
 SECRET_KEY=os.getenv('DJANGO_SECRET_KEY','change-this-secret-key-before-production')
 DEBUG=os.getenv('DJANGO_DEBUG','True').lower()=='true'
-ALLOWED_HOSTS=[x.strip() for x in os.getenv('DJANGO_ALLOWED_HOSTS','127.0.0.1,localhost').split(',') if x.strip()]
+ALLOWED_HOSTS=[x.strip() for x in os.getenv('DJANGO_ALLOWED_HOSTS','tilespot.pythonanywhere.com,127.0.0.1,localhost').split(',') if x.strip()]
 INSTALLED_APPS=['django.contrib.admin','django.contrib.auth','django.contrib.contenttypes','django.contrib.sessions','django.contrib.messages','django.contrib.staticfiles','market']
 MIDDLEWARE=['django.middleware.security.SecurityMiddleware','whitenoise.middleware.WhiteNoiseMiddleware','django.contrib.sessions.middleware.SessionMiddleware','django.middleware.common.CommonMiddleware','django.middleware.csrf.CsrfViewMiddleware','django.contrib.auth.middleware.AuthenticationMiddleware','django.contrib.messages.middleware.MessageMiddleware','django.middleware.clickjacking.XFrameOptionsMiddleware']
 ROOT_URLCONF='tilespot.urls'
